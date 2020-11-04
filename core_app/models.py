@@ -8,9 +8,9 @@ class Project(models.Model):
 
     title = models.CharField(max_length=100, blank=False, null=False)
     description = models.TextField(max_length=500, blank=True, null=True)
-    
     date_created = models.DateTimeField(auto_now_add=True)
     
+    # Relationship
     users = models.ManyToManyField(User)
 
     def __str__(self):
