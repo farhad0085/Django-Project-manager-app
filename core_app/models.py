@@ -7,11 +7,11 @@ class Project(models.Model):
     """Project model, used for store all project reference"""
 
     title = models.CharField(max_length=100, blank=False, null=False)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=500, blank=True, null=True)
     
     date_created = models.DateTimeField(auto_now_add=True)
     
-    user = models.ManyToManyField(User)
+    users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.title
@@ -26,7 +26,7 @@ class Card(models.Model):
     """Card model, used for store all card reference"""
 
     title = models.CharField(max_length=100, blank=False, null=False)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=500, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     
     # Relationship
@@ -47,11 +47,11 @@ class CardItem(models.Model):
     """CardItem model, used for store all card item reference"""
 
     title = models.CharField(max_length=100, blank=False, null=False)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     
     # Relationship
-    card = models.ForeignKey(Project, on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
@@ -76,7 +76,7 @@ class CardItemComment(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return self.body[:20]
 
     class Meta:
         verbose_name = 'Card Item Comment'
