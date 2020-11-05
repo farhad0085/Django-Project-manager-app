@@ -18,6 +18,17 @@
                         <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+                    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
+                        class="nav-item {% if 'project-all' in segment %} active {% endif %}">
+                        <a href="{% url 'list_projects' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span>
+                            <span class="pcoded-mtext">All Projects</span></a>
+                    </li>
+                    
+                    <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
+                        class="nav-item {% if 'project-create' in segment %} active {% endif %}">
+                        <a href="{% url 'create_project' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-plus-circle"></i></span>
+                            <span class="pcoded-mtext">Create new project</span></a>
+                    </li>
                     
                     <li data-username="form elements advance componant validation masking wizard picker select" 
                         class="nav-item {% if 'forms' in segment %} active {% endif %}">

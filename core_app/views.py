@@ -1,11 +1,15 @@
-from .models import Project
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
+from .models import Project
+from .forms import ProjectCreationForm
 
 @login_required
 def home(request):
-    projects = Project.objects.filter(users=request.user).all()
+    """Dashboard route"""
+
+    # TODO: Display 5 last projects
+    projects = Project.objects.filter(users=request.user).order_by('-date_created').all()
+    
 
     context = {
         'segment': 'index',
@@ -28,3 +32,32 @@ def pages(request):
         
     except:
         return render(request, 'page-500.html', context)
+
+
+@login_required
+def create_project(request):
+    form = ProjectCreationForm()
+    
+    context = {
+        'segment': 'project-create',
+        'form': form
+    }
+
+    return render(request, "core_app/create-project.html", context)
+
+
+
+@login_required
+def list_projects(request):
+    """Display all projects"""
+
+    # Display all projects by current user
+    projects = Project.objects.filter(users=request.user).order_by('-date_created').all()
+    
+
+    context = {
+        'segment': 'project-all',
+        'projects': projects
+    }
+
+    return render(request, "core_app/all-projects.html", context)
