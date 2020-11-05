@@ -10599,6 +10599,6 @@ div.code-toolbar > .toolbar span:hover {
 }
 
 .new-project:hover{
-    background-color: green;
+    background-color: #007BFF;
     color: white;
 }

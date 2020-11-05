@@ -1,0 +1,74 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h3 class="m-b-10">Project - {{ project.title }}</h3>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="row">
+
+                    {% for card in project.card_set.all %}
+                    <div class="col-md-12 col-xl-4">
+                        <div class="card">
+                            <div class="card-block border-bottom">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <h4>{{ card.title }}</h4>
+                                    </div>
+                                    <div class="col text-right">
+                                        <h5 class="text-c-green mb-0">
+                                            <a href="{% url 'detail_project' project.id %}"
+                                                class="btn btn-danger py-2">Remove Card</a>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-block">
+                                <ul class="list-group">
+                                    {% for item in card.carditem_set.all %}
+                                    <li class="list-group-item">{{ item.title }}</li>
+                                    {% empty %}
+                                    <li class="list-group-item">No item in this card</li>
+                                    {% endfor %}
+                                </ul>
+                                <a href="#" class="btn btn-primary btn-block btn-sm my-2"><i
+                                        class="fas fa-plus-circle fa-2x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

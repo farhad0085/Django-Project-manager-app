@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Project
 from .forms import ProjectCreationForm
@@ -68,3 +68,16 @@ def list_projects(request):
     }
 
     return render(request, "core_app/all-projects.html", context)
+
+
+@login_required
+def detail_project(request, id):
+    """Main project page"""
+
+    project = get_object_or_404(Project, id=id)
+
+    context = {
+        'project': project
+    }
+
+    return render(request, "core_app/detail-project.html", context)
