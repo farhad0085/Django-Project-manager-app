@@ -7,14 +7,23 @@ from .models import (
 )
 
 
+
+def change_working_status(modeladmin, request, queryset):
+    for project in queryset:
+        project.working = not project.working
+        project.save()
+change_working_status.short_description = "Change working status"
+
 class ProjectAdmin(admin.ModelAdmin):
     """Modify admin interface for model - Project"""
 
-    list_display = ['id', 'created_by', 'title', 'get_short_description', 'color', 'date_created']
-    search_fields = ['title', 'created_by', 'description', 'users__username']
+    list_display = ['id', 'title', 'get_short_description', 'working', 'color', 'date_created']
+    search_fields = ['title', 'description', 'users__username']
+    actions = [change_working_status]
 
     def get_short_description(self, instance):
         return instance.description[:60]
+
 
 
 class CardAdmin(admin.ModelAdmin):

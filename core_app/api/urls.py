@@ -1,8 +1,12 @@
-from django.urls import path
-from .views import ProjectListCreateAPIView, ProjectRetrieveUpdateDestroyAPIView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ProjectViewSet, CardViewSet, CardItemViewSet
 
+router = DefaultRouter()
+router.register('projects', ProjectViewSet)
+router.register('cards', CardViewSet)
+router.register('carditems', CardItemViewSet)
 
 urlpatterns = [
-    path('projects/', ProjectListCreateAPIView.as_view()),
-    path('projects/<pk>/', ProjectRetrieveUpdateDestroyAPIView.as_view()),
+    path('core/', include(router.urls)),
 ]

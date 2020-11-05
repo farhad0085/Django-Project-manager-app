@@ -25,7 +25,9 @@
                 </div>
                 <div class="col text-right">
                     <h5 class="text-c-green mb-0">
-                        <a href="{% url 'detail_project' project.id %}" class="btn btn-info py-2">Open</a>
+                        {% if project.working %}
+                        <a href="{% url 'detail_project' project.id %}" class="badge badge-success badge-pill">Currently working</a>
+                        {% endif %}
                     </h5>
                 </div>
             </div>

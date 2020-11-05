@@ -18,8 +18,7 @@ class ProjectCreationForm(forms.Form):
     def save(self, request):
         project = Project.objects.create(
             title=self.cleaned_data.get('title'),
-            description=self.cleaned_data.get('description'),
-            created_by=request.user
+            description=self.cleaned_data.get('description')
         )
         project.users.add(request.user)
         project.save()
