@@ -1,11 +1,18 @@
+from .models import Project
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 
 @login_required
 def home(request):
-    return render(request, "index.html")
+    projects = Project.objects.filter(users=request.user).all()
+
+    context = {
+        'segment': 'index',
+        'projects': projects
+    }
+
+    return render(request, "index.html", context)
 
 
 
