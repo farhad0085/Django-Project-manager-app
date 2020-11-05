@@ -1,0 +1,42 @@
+<!-- Add new project start -->
+<div class="col-md-12 col-xl-4">
+    <a href="{% url 'create_project' %}">
+        <div class="card" title="Add new project">
+            <div class="card-block new-project p-5">
+                <div class="row align-items-center justify-content-center card-active">
+                    <p>
+                        <i class="fas fa-plus-circle fa-8x"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+<!-- Add new project end -->
+
+<!--[Project list section] start-->
+{% for project in projects %}
+<div class="col-md-12 col-xl-4">
+    <div class="card">
+        <div class="card-block border-bottom">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <h4>{{ project.title|truncatechars:20 }}</h4>
+                </div>
+                <div class="col text-right">
+                    <h5 class="text-c-green mb-0">
+                        <button class="btn btn-info py-2">Open</button>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <div class="row align-items-center justify-content-center card-active">
+                {{ project.description }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!--[Project list section] end-->

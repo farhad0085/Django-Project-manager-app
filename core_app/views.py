@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Project
 from .forms import ProjectCreationForm
@@ -7,8 +7,8 @@ from .forms import ProjectCreationForm
 def home(request):
     """Dashboard route"""
 
-    # TODO: Display 5 last projects
-    projects = Project.objects.filter(users=request.user).order_by('-date_created').all()
+    # Display 5 last projects
+    projects = Project.objects.filter(users=request.user).order_by('-date_created').all()[:5]
     
 
     context = {
@@ -38,6 +38,13 @@ def pages(request):
 def create_project(request):
     form = ProjectCreationForm()
     
+    if request.method == 'POST':
+        form = ProjectCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save(request)
+            return redirect('list_projects')
+
     context = {
         'segment': 'project-create',
         'form': form
