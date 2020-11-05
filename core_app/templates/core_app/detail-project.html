@@ -49,13 +49,26 @@
                             <div class="card-block">
                                 <ul class="list-group">
                                     {% for item in card.carditem_set.all %}
-                                    <li class="list-group-item">{{ item.title }}</li>
+                                    <li class="list-group-item">{{ item.title }}
+                                        <span class="float-right">
+                                            <a href="{% url 'delete_card_item' project.id item.id %}"><i style="color: red;" class="fas fa-trash"></i></a>
+                                        </span>
+                                    </li>
                                     {% empty %}
                                     <li class="list-group-item">No item in this card</li>
                                     {% endfor %}
                                 </ul>
-                                <a href="#" title="Add new item to this card" class="btn btn-primary btn-block mt-4"><i
-                                        class="fas fa-plus-circle fa-2x"></i></a>
+                                <form style="display: none;" id="form{{ card.id }}" action="{% url 'create_card_item' project.id card.id %}" method="post">
+                                    {% csrf_token %}
+                                        <input type="text" maxlength="100" name="title" class="form-control">
+                                </form>
+                                <a
+                                    href="#"
+                                    onclick="toggleCardItemForm('form{{ card.id }}')"
+                                    title="Add new item to this card"
+                                    class="btn btn-primary btn-block mt-4">
+                                    <i class="fas fa-plus-circle fa-2x"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -105,4 +118,12 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block footer_scripts %}
+
+<script>
+    function toggleCardItemForm(formId){
+        $(`#${formId}`).toggle()
+    }
+</script>
+
+{% endblock footer_scripts %}

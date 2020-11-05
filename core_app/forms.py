@@ -1,6 +1,5 @@
 from django import forms
-from django.http import request
-from .models import Card, Project, PROJECT_COLORS
+from .models import Card, CardItem, Project, PROJECT_COLORS
 
 class ProjectCreationForm(forms.Form):
     """Forms for create new project"""
@@ -29,7 +28,7 @@ class CardCreationForm(forms.Form):
     
     title = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control'
-    }), label="Project title", max_length=100)
+    }), label="Card title", max_length=100)
 
     description = forms.CharField(widget=forms.Textarea(attrs={
         'class': 'form-control',
@@ -44,3 +43,4 @@ class CardCreationForm(forms.Form):
             project=project,
             created_by=request.user
         )
+

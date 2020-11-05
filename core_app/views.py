@@ -1,7 +1,9 @@
+from django.http import request
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from .models import Card, Project
+from .models import Card, CardItem, Project
 from .forms import ProjectCreationForm, CardCreationForm
+
 
 @login_required
 def home(request):
@@ -114,7 +116,7 @@ def create_card(request, project_id):
 
 @login_required
 def delete_card(request, project_id, card_id):
-    """Create new card page"""
+    """Delete card page"""
 
     try:
         project = Project.objects.get(id=project_id)
@@ -132,3 +134,51 @@ def delete_card(request, project_id, card_id):
     except Card.DoesNotExist:
         return render(request, 'page-404.html')
 
+
+@login_required
+def create_card_item(request, project_id, card_id):
+    """Create new card item"""
+    
+    try:
+        project = Project.objects.get(id=project_id)
+        card = Card.objects.get(id=card_id)
+
+        if not request.user in project.users.all():
+            return render(request, 'page-403.html')
+        
+        if request.method == 'POST':
+            title = request.POST.get('title')
+            CardItem.objects.create(
+                title=title,
+                created_by=request.user,
+                card=card
+            )
+            return redirect('detail_project', project_id)
+
+        else:
+            return render(request, 'page-403.html')
+
+    except (Project.DoesNotExist, Card.DoesNotExist):
+        return render(request, 'page-404.html')
+    except:
+        return render(request, 'page-500.html')
+
+
+@login_required
+def delete_card_item(request, project_id, card_item_id):
+    """Delete card item route"""
+    
+    try:
+        project = Project.objects.get(id=project_id)
+        card_item = CardItem.objects.get(id=card_item_id)
+
+        if not request.user in project.users.all():
+            return render(request, 'page-403.html')
+        
+        card_item.delete()
+        return redirect('detail_project', project_id)
+
+    except (Project.DoesNotExist, CardItem.DoesNotExist):
+        return render(request, 'page-404.html')
+    except:
+        return render(request, 'page-500.html')
