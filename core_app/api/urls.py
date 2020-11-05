@@ -8,5 +8,5 @@ router.register('cards', CardViewSet)
 router.register('carditems', CardItemViewSet)
 
 urlpatterns = [
-    path('core/', include(router.urls)),
+    path('', include(router.urls)),
 ]
