@@ -1,9 +1,4 @@
-/**======================================================================
-=========================================================================
-Template Name: Datta Able Admin Template
-Author: Codedthemes
-supports: https://codedthemes.support-hub.io/
-File: style.css
+/**
 =========================================================================
 =========================================================================
   == Table of Contents==
@@ -10597,4 +10592,13 @@ div.code-toolbar > .toolbar span:hover {
 		-webkit-box-shadow: 0 0 0 0 rgba(4, 169, 245, 0);
 		box-shadow: 0 0 0 0 rgba(4, 169, 245, 0)
 	}
+}
+
+.new-project{
+    border-radius: 5px;
+}
+
+.new-project:hover{
+    background-color: green;
+    color: white;
 }
