@@ -18,8 +18,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # project apps
     'authentication',
     'core_app',
+    'team_app',
 
     # rest framework
     'rest_framework',
