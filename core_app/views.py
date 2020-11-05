@@ -1,5 +1,3 @@
-from django.http import request
-from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Project
@@ -95,10 +93,10 @@ def create_card(request, project_id):
         project = Project.objects.get(id=project_id)
 
         if not request.user in project.users.all():
-            return HttpResponse("Sorry, You do not belong to this project")
+            return render(request, 'page-403.html')
 
     except Project.DoesNotExist:
-        return HttpResponse("Sorry, Project not found")
+        return render(request, 'page-404.html')
 
     if request.method == 'POST':
         form = CardCreationForm(request.POST)
