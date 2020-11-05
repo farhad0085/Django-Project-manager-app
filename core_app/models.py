@@ -20,6 +20,7 @@ class Project(models.Model):
     working = models.BooleanField(default=True, verbose_name="Currently working")
     color = models.CharField(max_length=15, choices=PROJECT_COLORS, default='default', verbose_name="Project UI color")
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Main Creator", related_name='created_by')
     
     # Relationship
     users = models.ManyToManyField(User)

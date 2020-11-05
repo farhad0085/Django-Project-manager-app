@@ -10,8 +10,8 @@ from .models import (
 class ProjectAdmin(admin.ModelAdmin):
     """Modify admin interface for model - Project"""
 
-    list_display = ['id', 'title', 'get_short_description', 'color', 'date_created']
-    search_fields = ['title', 'description', 'users__username']
+    list_display = ['id', 'created_by', 'title', 'get_short_description', 'color', 'date_created']
+    search_fields = ['title', 'created_by', 'description', 'users__username']
 
     def get_short_description(self, instance):
         return instance.description[:60]
