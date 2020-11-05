@@ -1,5 +1,5 @@
 from django import forms
-from .models import Card, CardItem, Project, PROJECT_COLORS
+from .models import Card, Project
 
 class ProjectCreationForm(forms.Form):
     """Forms for create new project"""
@@ -22,6 +22,8 @@ class ProjectCreationForm(forms.Form):
         project.users.add(request.user)
         project.save()
 
+        return project
+
     
 class CardCreationForm(forms.Form):
     """Forms for create new card for a project"""
@@ -37,10 +39,12 @@ class CardCreationForm(forms.Form):
 
     
     def save(self, request, project):
-        Card.objects.create(
+        card = Card.objects.create(
             title=self.cleaned_data.get('title'),
             description=self.cleaned_data.get('description'),
             project=project,
             created_by=request.user
         )
+
+        return card
 

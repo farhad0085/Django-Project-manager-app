@@ -18,7 +18,9 @@
                         <div class="page-header-title">
                             <h3 class="m-b-10">Project - {{ project.title }}
                                 <span class="float-right">
-                                    <button class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteConfirmation"><i class="fas fa-trash"></i>Delete</button>
+                                    <button class="btn btn-danger" data-toggle="modal"
+                                        data-target="#modalDeleteConfirmation"><i
+                                            class="fas fa-trash"></i>Delete</button>
                                 </span>
                             </h3>
                             <hr>
@@ -30,31 +32,33 @@
         <!-- [ breadcrumb ] end -->
 
         <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="modalDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="modalDeleteConfirmationTitle" aria-hidden="true">
+        <div class="modal fade" id="modalDeleteConfirmation" tabindex="-1" role="dialog"
+            aria-labelledby="modalDeleteConfirmationTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            You are about to delete this project,
+                            the action cannot be undone.
+                            Please write the project name here to proceed.
+                        </p>
+                        <p>
+                            Project name: <code>{{ project.title }}</code>
+                        </p>
+                        <input type="text" id="inputProjectName" class="form-control" placeholder="Project name">
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" href="{% url 'delete_project' project.id %}" class="btn disabled btn-danger"
+                            id="deleteProjectButton">Delete</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>
-                        You are about to delete this project,
-                        the action cannot be undone.
-                        Please write the project name here to proceed.
-                    </p>
-                    <p>
-                        Project name: <code>{{ project.title }}</code>
-                    </p>
-                    <input type="text" id="inputProjectName" class="form-control" placeholder="Project name">
-                </div>
-                <div class="modal-footer">
-                <a type="button" href="{% url 'delete_project' project.id %}" class="btn disabled btn-danger" id="deleteProjectButton">Delete</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
             </div>
         </div>
 
@@ -69,12 +73,13 @@
                             <div class="card-block border-bottom">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <h4 class="pointer" data-toggle="modal" data-target="#cardModal{{ card.id }}">{{ card.title }}</h4>
+                                        <h4 class="pointer" data-toggle="modal" data-target="#cardModal{{ card.id }}">
+                                            {{ card.title }}</h4>
                                     </div>
                                     <div class="col text-right">
                                         <h5 class="text-c-green mb-0">
-                                            <a href="{% url 'delete_card' project.id card.id %}"
-                                                class="btn btn-danger py-2">Remove Card</a>
+                                            <button data-target="#modalCardDeleteConfirmation{{ card.id }}"
+                                                data-toggle="modal" class="btn btn-danger py-2">Remove Card</button>
                                         </h5>
                                     </div>
                                 </div>
@@ -84,44 +89,74 @@
                                     {% for item in card.carditem_set.all %}
                                     <li class="list-group-item">{{ item.title }}
                                         <span class="float-right">
-                                            <a href="{% url 'delete_card_item' project.id item.id %}"><i style="color: red;" class="fas fa-trash"></i></a>
+                                            <a href="{% url 'delete_card_item' project.id item.id %}"><i
+                                                    style="color: red;" class="fas fa-trash"></i></a>
                                         </span>
                                     </li>
                                     {% empty %}
                                     <li class="list-group-item">No item in this card</li>
                                     {% endfor %}
                                 </ul>
-                                <form style="display: none;" id="form{{ card.id }}" action="{% url 'create_card_item' project.id card.id %}" method="post">
+                                <form style="display: none;" id="form{{ card.id }}"
+                                    action="{% url 'create_card_item' project.id card.id %}" method="post">
                                     {% csrf_token %}
-                                        <input type="text" placeholder="Write your text & press enter" maxlength="100" name="title" class="form-control">
+                                    <input type="text" id="inputCardItem{{ card.id }}"
+                                        placeholder="Write your text & press enter" maxlength="100" name="title"
+                                        class="form-control">
                                 </form>
-                                <a
-                                    href="#"
-                                    onclick="toggleCardItemForm('form{{ card.id }}')"
-                                    title="Add new item to this card"
-                                    class="btn btn-primary btn-block mt-4">
+                                <a href="#"
+                                    onclick="toggleCardItemForm('form{{ card.id }}', 'inputCardItem{{ card.id }}')"
+                                    title="Add new item to this card" class="btn btn-primary btn-block mt-4">
                                     <i class="fas fa-plus-circle fa-2x"></i>
                                 </a>
+                            </div>
+                            <!-- Card Delete Confirmation Modal -->
+                            <div class="modal fade" id="modalCardDeleteConfirmation{{ card.id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="modalCardDeleteConfirmation{{ card.id }}Title"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                You are about to delete this card,
+                                                the action cannot be undone. Are you sure?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{% url 'delete_card' project.id card.id %}" class="btn btn-danger"
+                                                id="deleteProjectButton">Yes, Confirm</a>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- Card Modal -->
-                    <div class="modal fade" id="cardModal{{ card.id }}" tabindex="-1" role="dialog" aria-labelledby="cardModal{{ card.id }}Title" aria-hidden="true">
+                    <div class="modal fade" id="cardModal{{ card.id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="cardModal{{ card.id }}Title" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">{{ card.title }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">{{ card.title }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ card.description|default:"No description found" }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <p>{{ card.description|default:"No description found" }}</p>
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
                         </div>
                     </div>
                     {% endfor %}
@@ -154,8 +189,9 @@
 {% block footer_scripts %}
 
 <script>
-    function toggleCardItemForm(formId){
+    function toggleCardItemForm(formId, inputCardItemId) {
         $(`#${formId}`).toggle()
+        $(`#${inputCardItemId}`).focus()
     }
 </script>
 <script>
@@ -164,16 +200,16 @@
     const deleteButton = $('#deleteProjectButton')
     const inputProjectName = $('#inputProjectName')
 
-    inputProjectName.on('input', function(){
+    inputProjectName.on('input', function () {
 
         inputProjectNameValue = $('#inputProjectName').val()
-        if(inputProjectNameValue === projectName){
+        if (inputProjectNameValue === projectName) {
             deleteButton.removeClass('disabled')
         }
-        else{
+        else {
             deleteButton.addClass('disabled')
         }
-        
+
     })
 </script>
 

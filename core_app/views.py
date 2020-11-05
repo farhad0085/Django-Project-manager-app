@@ -44,8 +44,8 @@ def create_project(request):
         form = ProjectCreationForm(request.POST)
 
         if form.is_valid():
-            form.save(request)
-            return redirect('list_projects')
+            project = form.save(request)
+            return redirect('detail_project', project.id)
 
     context = {
         'segment': 'project-create',
