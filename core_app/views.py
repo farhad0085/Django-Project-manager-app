@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from .models import Project
+from .models import Card, Project
 from .forms import ProjectCreationForm, CardCreationForm
 
 @login_required
@@ -110,3 +110,25 @@ def create_card(request, project_id):
     }
 
     return render(request, "core_app/create-card.html", context)
+
+
+@login_required
+def delete_card(request, project_id, card_id):
+    """Create new card page"""
+
+    try:
+        project = Project.objects.get(id=project_id)
+        card = Card.objects.get(id=card_id)
+
+        if not request.user in project.users.all():
+            return render(request, 'page-403.html')
+        
+        card.delete()
+        return redirect('detail_project', project_id)
+
+    except Project.DoesNotExist:
+        return render(request, 'page-404.html')
+
+    except Card.DoesNotExist:
+        return render(request, 'page-404.html')
+

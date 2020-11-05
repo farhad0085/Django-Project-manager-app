@@ -5,7 +5,8 @@ from .views import (
     list_projects,
     create_project,
     detail_project,
-    create_card
+    create_card,
+    delete_card
 )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
 
     # card
     path('cards/new/<project_id>/', create_card, name='create_card'),
+    path('cards/delete/<project_id>/<card_id>', delete_card, name='delete_card'),
 ]

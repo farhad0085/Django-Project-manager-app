@@ -36,11 +36,11 @@
                             <div class="card-block border-bottom">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <h4>{{ card.title }}</h4>
+                                        <h4 class="pointer" data-toggle="modal" data-target="#cardModal{{ card.id }}">{{ card.title }}</h4>
                                     </div>
                                     <div class="col text-right">
                                         <h5 class="text-c-green mb-0">
-                                            <a href="{% url 'detail_project' project.id %}"
+                                            <a href="{% url 'delete_card' project.id card.id %}"
                                                 class="btn btn-danger py-2">Remove Card</a>
                                         </h5>
                                     </div>
@@ -54,9 +54,28 @@
                                     <li class="list-group-item">No item in this card</li>
                                     {% endfor %}
                                 </ul>
-                                <a href="#" class="btn btn-primary btn-block mt-4"><i
+                                <a href="#" title="Add new item to this card" class="btn btn-primary btn-block mt-4"><i
                                         class="fas fa-plus-circle fa-2x"></i></a>
                             </div>
+                        </div>
+                    </div>
+                    <!-- Card Modal -->
+                    <div class="modal fade" id="cardModal{{ card.id }}" tabindex="-1" role="dialog" aria-labelledby="cardModal{{ card.id }}Title" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">{{ card.title }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ card.description|default:"No description found" }}</p>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                         </div>
                     </div>
                     {% endfor %}

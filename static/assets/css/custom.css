@@ -1,0 +1,12 @@
+.new-project{
+    border-radius: 5px;
+}
+
+.new-project:hover{
+    background-color: #007BFF;
+    color: white;
+}
+
+.pointer {
+    cursor: pointer;
+}
