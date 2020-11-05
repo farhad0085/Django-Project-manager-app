@@ -86,6 +86,25 @@ def detail_project(request, id):
 
 
 @login_required
+def delete_project(request, id):
+    """For delete a project"""
+
+    try:
+        project = Project.objects.get(id=id)
+        if not request.user in project.users.all():
+            return render(request, 'page-403.html')
+        
+        project.delete()
+        return redirect('list_projects')
+    except Project.DoesNotExist:
+        return render(request, "page-404.html")
+    except Exception as e:
+        print("Error", e)
+        return render(request, "page-500.html")
+
+
+
+@login_required
 def create_card(request, project_id):
     """Create new card page"""
 

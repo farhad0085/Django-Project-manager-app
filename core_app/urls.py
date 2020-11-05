@@ -8,7 +8,8 @@ from .views import (
     create_card,
     delete_card,
     create_card_item,
-    delete_card_item
+    delete_card_item,
+    delete_project
 )
 
 urlpatterns = [
@@ -19,6 +20,7 @@ urlpatterns = [
     path('projects/', list_projects, name='list_projects'),
     path('projects/new/', create_project, name='create_project'),
     path('projects/<id>/', detail_project, name='detail_project'),
+    path('projects/delete/<id>/', delete_project, name='delete_project'),
 
     # card
     path('cards/new/project/<project_id>/', create_card, name='create_card'),
