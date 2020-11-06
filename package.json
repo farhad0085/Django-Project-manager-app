@@ -1,0 +1,13 @@
+{
+  "name": "project-management-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+      "rs": "python manege.py runserver",
+      "mm": "python manege.py makemigrations",
+      "mg": "python manege.py migrate"
+  },
+  "repository": "git@github.com:farhad0085/Django-Project-manager-app.git",
+  "author": "Farhad Hossain <farhadhossain0085@gmail.com>",
+  "license": "MIT"
+}
