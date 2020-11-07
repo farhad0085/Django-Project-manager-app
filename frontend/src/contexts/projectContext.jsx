@@ -16,25 +16,43 @@ class ProjectProvider extends Component {
         previous: null,
         projects: [],
         loading: true,
-        error: null
+        error: null,
+        createProject: (title, description) => this.createProject(title, description)
+    }
+
+    createProject = async (title, description) => {
+        try {
+            const { data } = await axios.post("/projects/", {
+                title,
+                description
+            }, { headers: getHeaders() })
+
+            this.setState({
+                projects: [data, ...this.state.projects]
+            }, () => console.log(this.state))
+            return data
+        }
+        catch (e) {
+            throw new Error(e)
+        }
     }
 
     getProjects = () => {
-        axios.get("/projects/", {headers: getHeaders()})
-        .then(({data}) => this.setState({
-            count: data.count,
-            next: data.next,
-            previous: data.previous,
-            projects: data.results,
-            loading: false
-        }))
-        .catch(e => {
-            console.log(e)
-            this.setState({loading: false, error: "Failed to load projects at this moment. Please try again later!"})
-        })
+        axios.get("/projects/", { headers: getHeaders() })
+            .then(({ data }) => this.setState({
+                count: data.count,
+                next: data.next,
+                previous: data.previous,
+                projects: data.results,
+                loading: false
+            }))
+            .catch(e => {
+                console.log(e)
+                this.setState({ loading: false, error: "Failed to load projects at this moment. Please try again later!" })
+            })
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getProjects()
     }
 

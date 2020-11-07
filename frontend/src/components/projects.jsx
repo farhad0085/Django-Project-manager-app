@@ -1,8 +1,9 @@
-import React from 'react';
-import { ProjectConsumer, ProjectProvider } from '../contexts/projectContext'
+import React, { useContext } from 'react';
+import { ProjectProvider, ProjectContext } from '../contexts/projectContext'
 import Loading from "./loading"
 import ErrorMsg from './errorMsg'
 import { Link } from 'react-router-dom'
+import CreateProjectForm from './forms/projectCreateForm'
 
 
 
@@ -17,7 +18,7 @@ const Project = ({ project }) => {
                         <hr />
                     </div>
                     <p>
-                        {project.description ? project.description : "No description available"}
+                        {project.description ? project.description.slice(0, 200) : "No description available"}
                     </p>
                 </div>
             </div>
@@ -27,26 +28,19 @@ const Project = ({ project }) => {
 
 
 const Projects = () => {
-
+    const { projects, count, loading, error } = useContext(ProjectContext)
     return (
         <ProjectProvider>
-            <ProjectConsumer>
-                {({ projects, count, loading, error }) => {
-                    return (
-                        <>
-                            <h2>Projects {count}</h2>
-                            <hr />
-                            <ErrorMsg message={error} />
-                            {loading ? <Loading /> : (
-                                <div className="row">
-                                    {projects.map(project => <Project key={project.id} project={project} />)}
-                                </div>
-                            )}
-                        </>
-                    )
-                }}
+            <CreateProjectForm />
+            <h4>Projects {count}</h4>
+            <hr />
+            <ErrorMsg message={error} />
+            {loading ? <Loading /> : (
+                <div className="row">
+                    {projects.map(project => <Project key={project.id} project={project} />)}
+                </div>
+            )}
 
-            </ProjectConsumer>
         </ProjectProvider>
     );
 }

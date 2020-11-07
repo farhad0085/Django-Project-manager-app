@@ -20,6 +20,10 @@ class ProjectViewSet(ModelViewSet):
         query_set = queryset.filter(users=self.request.user)
         return query_set
 
+    def perform_create(self, serializer):
+        project = serializer.save()
+        project.users.add(self.request.user)
+        project.save()
 
 class CardViewSet(ModelViewSet):
     """Viewset for card"""

@@ -1,24 +1,22 @@
-import { AuthConsumer } from '../contexts/authContext'
-// import { ProjectProvider } from '../contexts/projectContext'
+import { AuthContext } from '../contexts/authContext'
 
 import Projects from './projects'
 import LoginForm from './forms/loginForm'
+import { useContext } from 'react'
 
 
-const Home = () => (
-    <AuthConsumer>
-        {({ isAuthenticated }) => (
+const Home = () => {
+    const { isAuthenticated } = useContext(AuthContext)
+    return (
+        <>
+            {isAuthenticated ? (
+                <Projects />
+            ) : (
+                    <LoginForm />
+                )}
 
-            <>
-                {isAuthenticated ? (
-                    <Projects />
-                ) : (
-                        <LoginForm />
-                    )}
-
-            </>
-        )}
-    </AuthConsumer>
-)
+        </>
+    )
+}
 
 export default Home

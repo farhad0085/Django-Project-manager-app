@@ -20,7 +20,7 @@ const Card = ({ card }) => {
                 <p className="text-muted mb-0">{card.description}</p>
                 <hr />
                 <ul className="list-group">
-                    {card.carditem_set.map(item => <CardItem item={item} />)}
+                    {card.carditem_set.map(item => <CardItem key={item.id} item={item} />)}
                     {!card.carditem_set.length && "No item here"}
                 </ul>
             </div>
