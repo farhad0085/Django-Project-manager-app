@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "rs": "python manege.py runserver",
-    "mm": "python manege.py makemigrations",
-    "mg": "python manege.py migrate"
+    "rs": "python manage.py runserver",
+    "mm": "python manage.py makemigrations",
+    "mg": "python manage.py migrate"
   },
   "repository": "git@github.com:farhad0085/Django-Project-manager-app.git",
   "author": "Farhad Hossain <farhadhossain0085@gmail.com>",

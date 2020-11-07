@@ -1,3 +1,4 @@
+# Login
 POST http://localhost:8000/api/auth/login/ HTTP/1.1
 content-type: application/json
 
@@ -5,3 +6,8 @@ content-type: application/json
     "username": "farhad",
     "password": "password"
 }
+
+### Logout
+POST http://localhost:8000/api/auth/logout/ HTTP/1.1
+content-type: application/json
+Authorization: Token 39dbdf2ea231ce0382a048ccc0ed0e434a679784

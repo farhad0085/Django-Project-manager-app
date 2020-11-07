@@ -13,5 +13,6 @@ urlpatterns = [
     # api
     path('api/', include('team_app.api.urls')),
     path('api/', include('core_app.api.urls')),
-    path('api/auth/', include('authentication.api.urls')),
+    path('api/auth/', include('rest_auth.urls')),
+    path('api/auth/registration', include('rest_auth.registration.urls')),
 ]

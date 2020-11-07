@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { AuthContext } from '../../contexts/authContext';
+import Loading from "../loading"
+import ErrorMsg from '../errorMsg'
 
 
 class LoginForm extends Component {
@@ -17,7 +19,7 @@ class LoginForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const {username, password} = this.state
+        const { username, password } = this.state
         this.context.methods.login(username, password)
     }
 
@@ -40,7 +42,7 @@ class LoginForm extends Component {
                                 className="form-control" />
                         </div>
                         <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                            <label htmlFor="password">Password</label>
                             <input
                                 type="password"
                                 name="password"
@@ -49,9 +51,10 @@ class LoginForm extends Component {
                                 required
                                 className="form-control" />
                         </div>
+                        <button type="submit" className="btn btn-primary">{this.context.loading ? <Loading size='10px' color="#ffffff" /> : "Login"}</button>
 
-                        <input type="submit" value="Login" className="btn btn-secondary" />
 
+                        {this.context.error && <ErrorMsg message={this.context.error} />}
                     </form>
                 </div>
             </div>

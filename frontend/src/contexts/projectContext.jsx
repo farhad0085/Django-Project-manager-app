@@ -14,7 +14,9 @@ class ProjectProvider extends Component {
         count: 0,
         next: null,
         previous: null,
-        projects: []
+        projects: [],
+        loading: true,
+        error: null
     }
 
     getProjects = () => {
@@ -24,8 +26,12 @@ class ProjectProvider extends Component {
             next: data.next,
             previous: data.previous,
             projects: data.results,
+            loading: false
         }))
-        .catch(e => console.log(e))
+        .catch(e => {
+            console.log(e)
+            this.setState({loading: false, error: "Failed to load projects at this moment. Please try again later!"})
+        })
     }
 
     componentDidMount(){

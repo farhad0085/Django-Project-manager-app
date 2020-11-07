@@ -1,6 +1,6 @@
 import React, { Component, createContext } from 'react';
 import axios from '../utils/axios'
-
+import { getHeaders } from '../utils'
 
 let Context = null
 
@@ -12,6 +12,8 @@ class AuthProvider extends Component {
     state = {
         isAuthenticated: false,
         token: null,
+        loading: false,
+        error: '',
         methods: {
             login: (username, password) => this.login(username, password),
             logout: () => this.logout()
@@ -19,26 +21,55 @@ class AuthProvider extends Component {
     }
 
     login = (username, password) => {
+        
+        this.setState({
+            loading: true,
+            error: ''
+        })
+
         axios.post("/auth/login/", {
             username: username,
             password: password
         })
         .then(({data}) => {
-            localStorage.setItem('token', data.token)
+            localStorage.setItem('token', data.key)
             this.setState({
-                token: data.token,
-                isAuthenticated: true
+                token: data.key,
+                isAuthenticated: true,
+                loading: false
             })
         })
-        .catch(e => console.log(e))
+        .catch(e => {
+            console.log(e)
+            this.setState({
+                loading: false,
+                error: "Failed to login with these credentials"
+            })
+        })
     }
 
     logout = () => {
-        localStorage.removeItem('token')
         this.setState({
-            isAuthenticated: false,
-            token: ''
+            loading: true
         })
+
+        axios.post('/auth/logout/', {}, {headers: getHeaders()})
+        .then(data => {
+            localStorage.removeItem('token')
+            this.setState({
+                isAuthenticated: false,
+                token: '',
+                loading: false
+            })
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({
+                loading: false,
+                error: "Unable to logout, please try again"
+            })
+        })
+        
     }
 
     componentDidMount(){

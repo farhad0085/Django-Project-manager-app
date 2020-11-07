@@ -29,6 +29,13 @@ INSTALLED_APPS = [
 
     # other
     'corsheaders',
+
+    # auth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth',
+    'rest_auth.registration',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +134,5 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000"
 ]
+
+SITE_ID = 1
