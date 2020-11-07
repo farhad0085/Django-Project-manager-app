@@ -9,9 +9,14 @@ const ProjectDetail = () => {
     let { project_id } = useParams();
     project_id = parseInt(project_id)
 
-    const { projects } = useContext(ProjectContext)
-    const project = projects.find(project => project.id === project_id)
-
+    let { activeProject, getSingleProject } = useContext(ProjectContext)
+    
+    // projects = getSingleProject()
+    // console.log(projects);
+    getSingleProject(project_id)
+    // const project = projects.find(project => project.id === project_id)
+    const project = activeProject
+    console.log(project);
     return (
         <>
             <h3>Project - {project.title}</h3>
