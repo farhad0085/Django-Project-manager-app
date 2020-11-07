@@ -3,6 +3,7 @@ import Home from './components/home'
 import Header from './components/header'
 import SiteRouter from './routes'
 import { AuthProvider } from './contexts/authContext'
+import { ProjectProvider } from './contexts/projectContext'
 
 
 const App = () => {
@@ -11,9 +12,11 @@ const App = () => {
         <AuthProvider>
             <Header />
             <div className="container my-4">
-                <SiteRouter>
-                    <Home />
-                </SiteRouter>
+                <ProjectProvider>
+                    <SiteRouter>
+                        <Home />
+                    </SiteRouter>
+                </ProjectProvider>
             </div>
         </AuthProvider>
     );

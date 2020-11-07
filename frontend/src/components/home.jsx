@@ -1,5 +1,5 @@
 import { AuthConsumer } from '../contexts/authContext'
-import { ProjectProvider } from '../contexts/projectContext'
+// import { ProjectProvider } from '../contexts/projectContext'
 
 import Projects from './projects'
 import LoginForm from './forms/loginForm'
@@ -11,9 +11,7 @@ const Home = () => (
 
             <>
                 {isAuthenticated ? (
-                    <ProjectProvider>
-                        <Projects />
-                    </ProjectProvider>
+                    <Projects />
                 ) : (
                         <LoginForm />
                     )}
