@@ -1,5 +1,6 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView
 
 from core_app.models import Card, Project, CardItem
 from .serializers import ProjectSerializer, CardSerializer, CardItemSerializer
@@ -34,3 +35,18 @@ class CardItemViewSet(ModelViewSet):
     queryset = CardItem.objects.all()
     serializer_class = CardItemSerializer
     permission_classes = [IsAuthenticated]
+
+
+class ProjectCardListAPIView(ListAPIView):
+    """List all cards for a single project"""
+
+    queryset = Project.objects.all()
+    serializer_class = CardSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        try:
+            cards = queryset.get(id=self.kwargs.get('project_id')).card_set.all()
+        except Project.DoesNotExist:
+            return []
+        return cards
