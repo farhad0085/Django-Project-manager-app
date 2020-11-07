@@ -10,10 +10,10 @@ const Project = ({ project }) => {
     const projectDetailsUrl = `/project/${project.id}`
     return (
         <div className="col-md-4 col-xl-4 my-2">
-            <div className="card">
+            <div className="card shadow-nohover">
                 <div className="card-body">
                     <div className="card-title">
-                        <h5><Link to={projectDetailsUrl}>{project.title}</Link></h5>
+                        <h5><Link className="card-link" to={projectDetailsUrl}>{project.title}</Link></h5>
                         <hr />
                     </div>
                     <p>
