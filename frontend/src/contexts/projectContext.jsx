@@ -17,7 +17,6 @@ class ProjectProvider extends Component {
         projects: [],
         loading: true,
         error: null,
-        activeProject: {},
         createProject: (title, description) => this.createProject(title, description),
         getSingleProject: (projectId) => this.getSingleProject(projectId),
     }
@@ -53,23 +52,18 @@ class ProjectProvider extends Component {
             })
     }
 
-    getSingleProject = (projectId) => {
+    getSingleProject = async(projectId) => {
 
-        this.setState({ loading: true })
-
-        axios.get(`/projects/${projectId}/`, { headers: getHeaders() })
-            .then(({ data }) => {
-                console.log(data);
-                this.setState({
-                    ...this.state,
-                    activeProject: {...data},
-                    loading: false
-                }, () => console.log("activeProject", this.state.activeProject))
-            })
-            .catch(e => {
-                console.log(e)
-                this.setState({ loading: false, error: "Failed to load projects at this moment. Please try again later!" })
-            })
+            // this.setState({ loading: true })
+            try {
+                const {data } = await axios.get(`/projects/${projectId}/`, { headers: getHeaders() })
+                // this.setState({loading: false})
+                return data
+            }
+            catch {
+                // this.setState({ loading: false, error: "Failed to load the project!" })
+                throw new Error("Failed to load")
+            }
     }
 
     componentDidMount() {

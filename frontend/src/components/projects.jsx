@@ -46,7 +46,7 @@ const Projects = () => {
     const { projects, count, loading, error } = useContext(ProjectContext)
     return (
         <>
-            <h4>Projects {count}</h4>
+            <h4>Projects ({count})</h4>
             <hr />
             <ErrorMsg message={error} />
             {loading ? <Loading /> : (
