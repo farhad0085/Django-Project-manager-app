@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 
 from core_app.models import Card, Project, CardItem
-from .serializers import ProjectSerializer, CardSerializer, CardItemSerializer
+from .serializers import ProjectSerializer, CardSerializer, CardItemSerializer, ProjectRetriveSerializer
 from .permissions import IsOwnProject
 
 
@@ -14,6 +14,11 @@ class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.order_by('-date_created').all() 
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated, IsOwnProject]
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return ProjectRetriveSerializer
+        return self.serializer_class
 
     def get_queryset(self):
         queryset = self.queryset

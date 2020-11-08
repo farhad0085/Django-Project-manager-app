@@ -10,4 +10,9 @@ content-type: application/json
 ### Logout
 POST http://localhost:8000/api/auth/logout/ HTTP/1.1
 content-type: application/json
-Authorization: Token 39dbdf2ea231ce0382a048ccc0ed0e434a679784
+Authorization: Token a8f77fcb339079b170dfb99b9f542ffd05564866
+
+
+### Project list
+GET http://localhost:8000/api/projects/ HTTP/1.1
+Authorization: Token a8f77fcb339079b170dfb99b9f542ffd05564866

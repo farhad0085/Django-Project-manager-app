@@ -29,8 +29,18 @@ class CardSerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
+class ProjectRetriveSerializer(serializers.ModelSerializer):
+    """Serializer for project retrieve when modelviewser called"""
+
+    # include card set and users to it
     card_set = CardSerializer(many=True, read_only=True)
     users = UserSerializer(many=True, read_only=True)
+
 
     class Meta:
         model = Project
