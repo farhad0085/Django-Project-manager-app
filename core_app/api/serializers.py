@@ -31,7 +31,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['users']
 
 
 class ProjectRetriveSerializer(serializers.ModelSerializer):

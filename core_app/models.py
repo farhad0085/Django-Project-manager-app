@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from user.models import UserAccount
 
 PROJECT_COLORS = [
     ('default', 'Default'),
@@ -12,6 +12,7 @@ PROJECT_COLORS = [
     ('yellow', "Yellow")
 ]
 
+
 class Project(models.Model):
     """Project model, used for store all project reference"""
 
@@ -22,7 +23,7 @@ class Project(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
     
     # Relationship
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(UserAccount)
 
     def __str__(self):
         return self.title
@@ -42,7 +43,7 @@ class Card(models.Model):
     
     # Relationship
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
     
     
     def __str__(self):
@@ -64,7 +65,7 @@ class CardItem(models.Model):
     
     # Relationship
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Created by")
+    created_by = models.ForeignKey(UserAccount, on_delete=models.CASCADE, verbose_name="Created by")
 
 
     def __str__(self):
@@ -84,7 +85,7 @@ class CardItemComment(models.Model):
     
     # Relationship
     card_item = models.ForeignKey(CardItem, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
 
 
     def __str__(self):
