@@ -7,3 +7,4 @@ class IsOwnProject(BasePermission):
         if request.user in obj.users.all():
             return True
         return False
+    

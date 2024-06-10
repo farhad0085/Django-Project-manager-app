@@ -18,7 +18,6 @@ INSTALLED_APPS = [
 
     # project apps
     'core_app',
-    'team_app',
     'user',
 
     # rest framework

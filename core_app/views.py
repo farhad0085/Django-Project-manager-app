@@ -1,203 +1,60 @@
-from django.http import request
-from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
-from .models import Card, CardItem, Project
-from .forms import ProjectCreationForm, CardCreationForm
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView
+from core_app.models import Card, Project, CardItem
+from .serializers import ProjectSerializer, CardSerializer, CardItemSerializer, ProjectRetriveSerializer
+from .permissions import IsOwnProject
 
 
-@login_required
-def home(request):
-    """Dashboard route"""
+class ProjectViewSet(ModelViewSet):
+    """Viewset for project"""
 
-    # Display 5 last projects
-    projects = Project.objects.filter(users=request.user).order_by('-date_created').all()[:5]
-    
+    queryset = Project.objects.order_by('-date_created').all() 
+    serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated, IsOwnProject]
 
-    context = {
-        'segment': 'index',
-        'projects': projects
-    }
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return ProjectRetriveSerializer
+        return self.serializer_class
 
-    return render(request, "index.html", context)
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.filter(users=self.request.user)
+        return query_set
 
-
-
-@login_required
-def pages(request):
-
-    context = {}
-    try:
-        load_template      = request.path.split('/')[-1]
-        context['segment'] = load_template
-        
-        return render(request, load_template, context)
-        
-    except:
-        return render(request, 'page-500.html', context)
+    def perform_create(self, serializer):
+        project = serializer.save()
+        project.users.add(self.request.user)
+        project.save()
 
 
-@login_required
-def create_project(request):
-    form = ProjectCreationForm()
-    
-    if request.method == 'POST':
-        form = ProjectCreationForm(request.POST)
+class CardViewSet(ModelViewSet):
+    """Viewset for card"""
 
-        if form.is_valid():
-            project = form.save(request)
-            return redirect('detail_project', project.id)
-
-    context = {
-        'segment': 'project-create',
-        'form': form
-    }
-
-    return render(request, "core_app/create-project.html", context)
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+    permission_classes = [IsAuthenticated]
 
 
+class CardItemViewSet(ModelViewSet):
+    """Viewset for card item"""
 
-@login_required
-def list_projects(request):
-    """Display all projects"""
-
-    # Display all projects by current user
-    projects = Project.objects.filter(users=request.user).order_by('-date_created').all()
-    
-
-    context = {
-        'segment': 'project-all',
-        'projects': projects
-    }
-
-    return render(request, "core_app/all-projects.html", context)
+    queryset = CardItem.objects.all()
+    serializer_class = CardItemSerializer
+    permission_classes = [IsAuthenticated]
 
 
-@login_required
-def detail_project(request, id):
-    """Main project page"""
+class ProjectCardListAPIView(ListAPIView):
+    """List all cards for a single project"""
 
-    project = get_object_or_404(Project, id=id)
+    queryset = Project.objects.all()
+    serializer_class = CardSerializer
 
-    context = {
-        'project': project
-    }
-
-    return render(request, "core_app/detail-project.html", context)
-
-
-@login_required
-def delete_project(request, id):
-    """For delete a project"""
-
-    try:
-        project = Project.objects.get(id=id)
-        if not request.user in project.users.all():
-            return render(request, 'page-403.html')
-        
-        project.delete()
-        return redirect('list_projects')
-    except Project.DoesNotExist:
-        return render(request, "page-404.html")
-    except Exception as e:
-        print("Error", e)
-        return render(request, "page-500.html")
-
-
-
-@login_required
-def create_card(request, project_id):
-    """Create new card page"""
-
-    form = CardCreationForm()
-
-    try:
-        project = Project.objects.get(id=project_id)
-
-        if not request.user in project.users.all():
-            return render(request, 'page-403.html')
-
-    except Project.DoesNotExist:
-        return render(request, 'page-404.html')
-
-    if request.method == 'POST':
-        form = CardCreationForm(request.POST)
-
-        if form.is_valid():
-            form.save(request, project)
-            return redirect('detail_project', project_id)
-
-    context = {
-        'form': form
-    }
-
-    return render(request, "core_app/create-card.html", context)
-
-
-@login_required
-def delete_card(request, project_id, card_id):
-    """Delete card page"""
-
-    try:
-        project = Project.objects.get(id=project_id)
-        card = Card.objects.get(id=card_id)
-
-        if not request.user in project.users.all():
-            return render(request, 'page-403.html')
-        
-        card.delete()
-        return redirect('detail_project', project_id)
-
-    except Project.DoesNotExist:
-        return render(request, 'page-404.html')
-
-    except Card.DoesNotExist:
-        return render(request, 'page-404.html')
-
-
-@login_required
-def create_card_item(request, project_id, card_id):
-    """Create new card item"""
-    
-    try:
-        project = Project.objects.get(id=project_id)
-        card = Card.objects.get(id=card_id)
-
-        if not request.user in project.users.all():
-            return render(request, 'page-403.html')
-        
-        if request.method == 'POST':
-            title = request.POST.get('title')
-            CardItem.objects.create(
-                title=title,
-                created_by=request.user,
-                card=card
-            )
-            return redirect('detail_project', project_id)
-
-        else:
-            return render(request, 'page-403.html')
-
-    except (Project.DoesNotExist, Card.DoesNotExist):
-        return render(request, 'page-404.html')
-    except:
-        return render(request, 'page-500.html')
-
-
-@login_required
-def delete_card_item(request, project_id, card_item_id):
-    """Delete card item route"""
-    
-    try:
-        project = Project.objects.get(id=project_id)
-        card_item = CardItem.objects.get(id=card_item_id)
-
-        if not request.user in project.users.all():
-            return render(request, 'page-403.html')
-        
-        card_item.delete()
-        return redirect('detail_project', project_id)
-
-    except (Project.DoesNotExist, CardItem.DoesNotExist):
-        return render(request, 'page-404.html')
-    except:
-        return render(request, 'page-500.html')
+    def get_queryset(self):
+        queryset = self.queryset
+        try:
+            cards = queryset.get(id=self.kwargs.get('project_id')).card_set.all()
+        except Project.DoesNotExist:
+            return []
+        return cards
