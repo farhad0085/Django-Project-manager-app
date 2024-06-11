@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
-import Home from '../components/home';
 import LoginForm from "../components/forms/loginForm";
 import Board from '../pages/Board/Board';
 import NotFound from '../pages/Others/NotFound';
@@ -8,13 +7,16 @@ import * as URLS from './urls'
 import AccessDenied from '../pages/Others/AccessDenied';
 import GuestRoute from './GuestRoute';
 import PrivateRoute from './PrivateRoute';
+import Home from '../pages/Home/Home';
+import Dashboard from '../pages/Dashboard/Dashboard';
 
 
 const Routes = () => {
   return (
     <Switch>
-      <Route path="/" exact component={Home} />
-      <GuestRoute path="/login" component={LoginForm} />
+      <Route path={URLS.HOME} exact component={Home} />
+      <GuestRoute path={URLS.LOGIN_PAGE} component={LoginForm} />
+      <PrivateRoute path={URLS.DASHBOARD} component={Dashboard} />
       <PrivateRoute exact path="/project/:project_id" component={Board} />
 
       <Route exact path={URLS.ACCESS_DENIED_PAGE} component={AccessDenied} />
