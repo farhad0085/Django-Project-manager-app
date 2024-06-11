@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { HOME } from '../routes/urls'
+import { AuthContext } from '../contexts/authContext'
 
 
 const Layout = ({ children }) => {
+
+  const { isAuthenticated, methods } = useContext(AuthContext)
 
   const history = useHistory()
 
@@ -35,9 +38,15 @@ const Layout = ({ children }) => {
             <i className="fas fa-bell" aria-hidden="true"></i>
           </button>
 
-          <button className="user-settings-btn btn" aria-label="User Settings">
-            <i className="fas fa-user-circle" aria-hidden="true"></i>
-          </button>
+          {isAuthenticated ? (
+            <button className="user-settings-btn btn" onClick={methods.logout} aria-label="User Settings">
+              <i className="fas fa-sign-out-alt" aria-hidden="true"></i>
+            </button>
+          ) : (
+            <button className="user-settings-btn btn" aria-label="User Settings">
+              <i className="fas fa-key" aria-hidden="true"></i>
+            </button>
+          )}
         </div>
       </header>
 

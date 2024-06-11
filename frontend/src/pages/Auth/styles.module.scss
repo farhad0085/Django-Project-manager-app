@@ -1,24 +1,33 @@
 .container {
   display: flex;
+  margin-top: 20px;
   width: 100%;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.title {
-  color: white;
+.card {
+  background-color: whitesmoke;
+  width: 550px;
+  border-radius: 5px;
+  padding: 10px;
+
+  .cardTitle {
+    text-align: center;
+  }
 }
 
 .button {
-  font-size: 16px;
   padding: 10px;
   border: none;
   background-color: #3993c7;
   color: white;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 14px;
+  width: 100%;
 
   &:hover {
     background-color: #3385B5;
