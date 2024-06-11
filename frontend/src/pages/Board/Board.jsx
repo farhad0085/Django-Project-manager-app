@@ -1,0 +1,197 @@
+import React from 'react'
+import './styles.css'
+
+
+const Board = () => {
+
+    return (
+        <>
+            <header class="masthead">
+
+                <div class="boards-menu">
+
+                    <button class="boards-btn btn"><i class="fab fa-trello boards-btn-icon"></i>Boards</button>
+
+                    <div class="board-search">
+                        <input type="search" class="board-search-input" aria-label="Board Search" />
+                            <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                    </div>
+
+                </div>
+
+                <div class="logo">
+
+                    <h1><i class="fab fa-trello logo-icon" aria-hidden="true"></i>Trello</h1>
+
+                </div>
+
+                <div class="user-settings">
+
+                    <button class="user-settings-btn btn" aria-label="Create">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
+
+                    <button class="user-settings-btn btn" aria-label="Information">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    </button>
+
+                    <button class="user-settings-btn btn" aria-label="Notifications">
+                        <i class="fas fa-bell" aria-hidden="true"></i>
+                    </button>
+
+                    <button class="user-settings-btn btn" aria-label="User Settings">
+                        <i class="fas fa-user-circle" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            {/* <!-- Board info bar --> */}
+            <section class="board-info-bar">
+
+                <div class="board-controls">
+
+                    <button class="board-title btn">
+                        <h2>Web Development</h2>
+                    </button>
+
+                    <button class="star-btn btn" aria-label="Star Board">
+                        <i class="far fa-star" aria-hidden="true"></i>
+                    </button>
+
+                    <button class="personal-btn btn">Personal</button>
+
+                    <button class="private-btn btn"><i class="fas fa-briefcase private-btn-icon" aria-hidden="true"></i>Private</button>
+
+                </div>
+
+                <button class="menu-btn btn"><i class="fas fa-ellipsis-h menu-btn-icon" aria-hidden="true"></i>Show Menu</button>
+
+            </section>
+            {/* <!-- End of board info bar --> */}
+
+            {/* <!-- Lists container --> */}
+            <section class="lists-container">
+
+                <div class="list">
+
+                    <h3 class="list-title">Tasks to Do</h3>
+
+                    <ul class="list-items">
+                        <li>Complete mock-up for client website</li>
+                        <li>Email mock-up to client for feedback</li>
+                        <li>Update personal website header background image</li>
+                        <li>Update personal website heading fonts</li>
+                        <li>Add google map to personal website</li>
+                        <li>Begin draft of CSS Grid article</li>
+                        <li>Read new CSS-Tricks articles</li>
+                        <li>Read new Smashing Magazine articles</li>
+                        <li>Read other bookmarked articles</li>
+                        <li>Look through portfolios to gather inspiration</li>
+                        <li>Create something cool for CodePen</li>
+                        <li>Post latest CodePen work on Twitter</li>
+                        <li>Listen to new Syntax.fm episode</li>
+                        <li>Listen to new CodePen Radio episode</li>
+                    </ul>
+
+                    <button class="add-card-btn btn">Add a card</button>
+
+                </div>
+
+                <div class="list">
+
+                    <h3 class="list-title">Completed Tasks</h3>
+
+                    <ul class="list-items">
+                        <li>Clear email inbox</li>
+                        <li>Finalise requirements for client web design</li>
+                        <li>Begin work on mock-up for client website</li>
+                    </ul>
+
+                    <button class="add-card-btn btn">Add a card</button>
+
+                </div>
+
+                <div class="list">
+
+                    <h3 class="list-title">Topics/Concepts to Revise</h3>
+
+                    <ul class="list-items">
+                        <li>HTML Elements</li>
+                        <li>HTML Form Validation</li>
+                        <li>HTML Structured Data</li>
+                        <li>Advanced CSS Selectors</li>
+                        <li>CSS Transforms</li>
+                        <li>CSS Animations</li>
+                        <li>CSS Flexbox</li>
+                        <li>CSS Grid</li>
+                        <li>CSS Methodologies (BEM, SMACSS etc.)</li>
+                        <li>SASS/SCSS</li>
+                        <li>Layout Fallbacks</li>
+                        <li>Responsive Design</li>
+                        <li>Design Patterns</li>
+                        <li>JavaScript Fundamentals</li>
+                        <li>JavaScript OOP</li>
+                        <li>JavaScript DOM Manipulation</li>
+                        <li>JavaScript Debugging Techniques</li>
+                        <li>Node Package Manager</li>
+                        <li>Grunt/Gulp</li>
+                        <li>GitHub</li>
+                        <li>Git Commands</li>
+                        <li>Web Accessibility</li>
+                        <li>Web Performance</li>
+                        <li>Web Hosting</li>
+                        <li>Browser Dev Tools</li>
+                        <li>Google Analytics</li>
+                        <li>Basic Photoshop/Sketch Usage</li>
+                    </ul>
+
+                    <button class="add-card-btn btn">Add a card</button>
+
+                </div>
+
+                <div class="list">
+
+                    <h3 class="list-title">Topics/Concepts to Learn</h3>
+
+                    <ul class="list-items">
+                        <li>HTML 5.2 New Features</li>
+                        <li>Responsive Images (picture element, srcset/sizes etc.)</li>
+                        <li>Serverless</li>
+                        <li>Variable Fonts</li>
+                        <li>Shadow DOM</li>
+                        <li>ES6+</li>
+                        <li>JSON & AJAX</li>
+                        <li>API's</li>
+                        <li>JavaScript Patterns</li>
+                        <li>JavaScript Testing</li>
+                        <li>jQuery</li>
+                        <li>SVG</li>
+                        <li>React JS</li>
+                        <li>Angular JS</li>
+                        <li>TypeScript</li>
+                        <li>Vue JS</li>
+                        <li>Node JS</li>
+                        <li>Webpack</li>
+                        <li>SEO Techniques</li>
+                        <li>HTML Emails</li>
+                        <li>WordPress</li>
+                        <li>Static Site Generators (Jekyll, Hugo, Gatsby etc.)</li>
+                    </ul>
+
+                    <button class="add-card-btn btn">Add a card</button>
+
+                </div>
+
+                <button class="add-list-btn btn">Add a list</button>
+
+            </section>
+        </>
+    )
+
+}
+
+
+export default Board

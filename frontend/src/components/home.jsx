@@ -6,17 +6,17 @@ import { useContext } from 'react'
 
 
 const Home = () => {
-    const { isAuthenticated } = useContext(AuthContext)
-    return (
-        <>
-            {isAuthenticated ? (
-                <Projects />
-            ) : (
-                    <LoginForm />
-                )}
+  const { isAuthenticated } = useContext(AuthContext)
+  return (
+    <>
+      {isAuthenticated ? (
+        <Projects />
+      ) : (
+        <LoginForm />
+      )}
 
-        </>
-    )
+    </>
+  )
 }
 
 export default Home
