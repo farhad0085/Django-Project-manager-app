@@ -40,7 +40,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'project_management_project.urls'
+ROOT_URLCONF = 'pms_project.urls'
 
 
 TEMPLATES = [
@@ -59,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'project_management_project.wsgi.application'
+WSGI_APPLICATION = 'pms_project.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = []
 AUTHENTICATION_BACKENDS = ["user.backends.AuthBackend"]
