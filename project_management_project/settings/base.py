@@ -9,6 +9,7 @@ ENVIRONMENT = os.environ.get("ENVIRONMENT")
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 INSTALLED_APPS = [
+    "jazzmin",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -98,3 +99,5 @@ REST_FRAMEWORK = {
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True
+
+from .admin import *
