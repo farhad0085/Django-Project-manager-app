@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # project apps
-    'core_app',
+    'board',
     'user',
 
     # rest framework

@@ -18,7 +18,7 @@ class ProjectProvider extends Component {
         loading: true,
         error: null,
         createProject: (title, description) => this.createProject(title, description),
-        getSingleProject: (projectId) => this.getSingleProject(projectId),
+        getSingleProject: (boardId) => this.getSingleProject(boardId),
     }
 
     createProject = async (title, description) => {
@@ -28,7 +28,7 @@ class ProjectProvider extends Component {
                 description
             }, { headers: getHeaders() })
 
-            this.getProjects()
+            this.getBoards()
 
             return data
         }
@@ -37,7 +37,7 @@ class ProjectProvider extends Component {
         }
     }
 
-    getProjects = () => {
+    getBoards = () => {
         axios.get("/projects/", { headers: getHeaders() })
             .then(({ data }) => this.setState({
                 count: data.count,
@@ -52,11 +52,11 @@ class ProjectProvider extends Component {
             })
     }
 
-    getSingleProject = async(projectId) => {
+    getSingleProject = async(boardId) => {
 
             // this.setState({ loading: true })
             try {
-                const {data } = await axios.get(`/projects/${projectId}/`, { headers: getHeaders() })
+                const {data } = await axios.get(`/projects/${boardId}/`, { headers: getHeaders() })
                 // this.setState({loading: false})
                 return data
             }
@@ -67,7 +67,7 @@ class ProjectProvider extends Component {
     }
 
     componentDidMount() {
-        this.getProjects()
+        this.getBoards()
     }
 
     render() {

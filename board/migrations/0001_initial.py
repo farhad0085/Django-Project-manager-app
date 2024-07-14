@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, null=True, verbose_name='Short description')),
                 ('working', models.BooleanField(default=True, verbose_name='Currently working')),
                 ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core_app.card')),
+                ('card', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board.card')),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Created by')),
             ],
             options={
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('body', models.TextField(verbose_name='Comment text')),
                 ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('card_item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core_app.carditem')),
+                ('card_item', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board.carditem')),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -77,6 +77,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='card',
             name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='core_app.project'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='board.project'),
         ),
     ]

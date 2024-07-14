@@ -3,30 +3,29 @@ import { getHeaders } from '../utils/index'
 
 class Project {
     constructor() {
-        this.projectId = null
-        this.totalProject = 0
+        this.boardId = null
         this.headers = getHeaders()
     }
 
-    async getProjects() {
+    async getBoards() {
 
         try {
-            const { data } = await axios.get("/projects", { headers: this.headers })
+            const { data } = await axios.get("/boards", { headers: this.headers })
             return data
         }
         catch {
-            throw new Error("Error loading projects")
+            throw new Error("Error loading boards")
         }
     }
 
-    async getOneProject(id) {
+    async getBoard(id) {
 
         try {
-            const { data } = await axios.get(`/projects/${id}`, { headers: this.headers })
+            const { data } = await axios.get(`/boards/${id}`, { headers: this.headers })
             return data
         }
         catch {
-            throw new Error("Error loading projects")
+            throw new Error("Error loading board")
         }
     }
 

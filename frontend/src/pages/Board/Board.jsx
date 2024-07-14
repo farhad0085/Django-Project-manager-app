@@ -9,9 +9,11 @@ const Board = () => {
   const [projectState, setProjectState] = useState({})
   const { project_id } = useParams()
 
+  console.log(projectState)
+
   useEffect(() => {
     const project = new Project()
-    project.getOneProject(project_id)
+    project.getBoard(project_id)
       .then(data => {
         setProjectState(data)
       })

@@ -7,5 +7,5 @@ urlpatterns = [
 
     # api
     path('api/auth/', include('user.urls')),
-    path('api/', include('core_app.urls')),
+    path('api/', include('board.urls')),
 ]

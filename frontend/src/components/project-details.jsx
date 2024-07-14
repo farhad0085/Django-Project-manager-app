@@ -14,7 +14,7 @@ const ProjectDetail = () => {
   useEffect(() => {
     setProjectState({ id: project_id })
     console.log("Called");
-    project.getOneProject(project_id)
+    project.getBoard(project_id)
       .then(data => {
         console.log(data);
         if (data.id !== projectState.id) {

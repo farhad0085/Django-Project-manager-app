@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core_app.models import Project, Card, CardItem
+from board.models import Board, Card, CardItem
 from user.serializers import UserAccountSerializer
 
 
@@ -21,22 +21,11 @@ class CardSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class BoardSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Project
-        # fields = '__all__'
-        exclude = ['users']
-
-
-class ProjectRetriveSerializer(serializers.ModelSerializer):
-    """Serializer for project retrieve when modelviewser called"""
-
-    # include card set and users to it
     card_set = CardSerializer(many=True, read_only=True)
     users = UserAccountSerializer(many=True, read_only=True)
 
-
     class Meta:
-        model = Project
+        model = Board
         fields = '__all__'

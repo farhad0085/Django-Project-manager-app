@@ -52,11 +52,11 @@ const Dashboard = () => {
       {loading ? <Loading /> : (
         <div className="row">
 
+          {projects.map(project => <Project key={project.id} project={project} />)}
           {/* Add new project button */}
           <NewButton onClick={() => setNewProjectBtn(!newProjectBtn)} />
           {newProjectBtn && <CreateProjectForm />}
 
-          {projects.map(project => <Project key={project.id} project={project} />)}
         </div>
       )}
     </Layout>
